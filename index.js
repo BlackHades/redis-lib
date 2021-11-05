@@ -12,10 +12,10 @@ const localhost = process.env.REDIS_HOST || "127.0.0.1";
 const port = process.env.REDIS_PORT || 6379
 const password = process.env.REDIS_PASSWORD || ""
 module.exports = (config = {}) => {
-    let {url = process.env.REDIS_CLUSTER_URL || process.env.REDIS_URL} = config;
-    if (!url && localhost)
-        url = `redis://${password ? ":" + password : ""}@${localhost}:${port}`;
+    let {url} = config;
 
+    url = url ||  process.env.REDIS_CLUSTER_URL || process.env.REDIS_URL ||  `redis://${password ? ":" + password + "@" : ""}${localhost}:${port}`;
+    console.log("URL", url);
     let redis;
     //We are splitting the URL because of clusters
     const urls = url?.split(",");

@@ -1,6 +1,5 @@
 "use strict";
 let redis
-
 describe('# Test Redis connection', function () {
     let channel = null;
     let redis = null;
