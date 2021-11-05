@@ -12,10 +12,10 @@ This is a wrapper around `ioredis` which provides automatic reconnects.
 ## Installation
 ```json
 "dependencies": {
-    "redis-lib": "^0.0.1"
+    "redis-lib": "^0.0.2"
 }
 ```
-```npm install message-broker-lib```
+```npm install redis-lib```
 
 ## Initialization
 ```javascript
