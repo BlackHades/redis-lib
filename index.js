@@ -9,13 +9,12 @@ const Redis = require("ioredis");
  * @return {Cluster|Redis}
  */
 const localhost = process.env.REDIS_HOST || "127.0.0.1";
-const port = process.env.REDIS_PORT || 6379
+const port = process.env.REDIS_PORT || 6370
 const password = process.env.REDIS_PASSWORD || ""
 module.exports = (config = {}) => {
-    let {url} = config;
+    let url = config.url ||  process.env.REDIS_CLUSTER_URL || process.env.REDIS_URL ||  `redis://${password ? ":" + password + "@" : ""}${localhost}:${port}`;
 
-    url = url ||  process.env.REDIS_CLUSTER_URL || process.env.REDIS_URL ||  `redis://${password ? ":" + password + "@" : ""}${localhost}:${port}`;
-    console.log("URL", url);
+    console.log("URL", url, config);
     let redis;
     //We are splitting the URL because of clusters
     const urls = url?.split(",");
@@ -44,10 +43,13 @@ module.exports = (config = {}) => {
         console.log(err.message, err, {}, true);
     });
 
-    setInterval(function () {
-        console.log(`Keeping alive ${config.appName || process.env.APP_NAME}`);
-        redis.set('ping', 'pong');
-    }, 1000 * 60 * 4);
+    if(config.keepAlive){
+        setInterval(function () {
+            console.log(`Keeping alive ${config.appName || process.env.APP_NAME}`);
+            redis.set('ping', 'pong');
+        }, 1000 * 60 * 4);
+    }
+
 
     global.cache = redis;
     global.redis = redis;

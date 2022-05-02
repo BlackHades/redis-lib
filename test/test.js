@@ -1,5 +1,6 @@
 "use strict";
 let redis
+process.env.REDIS_URL="redis://127.0.0.1:6379"
 describe('# Test Redis connection', function () {
     let channel = null;
     let redis = null;
