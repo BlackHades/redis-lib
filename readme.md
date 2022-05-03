@@ -12,7 +12,7 @@ This is a wrapper around `ioredis` which provides automatic reconnects.
 ## Installation
 ```json
 "dependencies": {
-    "redis-lib": "^0.0.2"
+    "redis-lib": "^0.0.3"
 }
 ```
 ```npm install redis-lib```
